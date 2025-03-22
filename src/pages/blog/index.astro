@@ -4,12 +4,7 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
-import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
-import { generateURL } from "../../utils";
-
-const posts = (await getCollection("blog", post => !post.data.hide)).sort(
+const posts = (await getCollection("https://wp.phnompenhreview.com/wp-json/wp/v2/posts", post => !post.data.hide)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
