@@ -5,24 +5,24 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
 // Fetch Astro content collection
-const posts = (await getCollection("blog", post => !post.data.hide)).sort(
+const astroPosts = (await getCollection("blog", (post) => !post.data.hide)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-}));
+);
 
 // Fetch WordPress posts
 const wpResponse = await fetch("https://wp.phnompenhreview.com/wp-json/wp/v2/posts");
-const wpPosts = (await wpResponse.json()).map(post => ({
+const wpPosts = (await wpResponse.json()).map((post) => ({
   id: post.id,
   title: post.title.rendered,
   pubDate: new Date(post.date),
-  source: 'wordpress',
-  url: `/wordpress/${post.slug}`
+  source: "wordpress",
+  url: `/wordpress/${post.slug}`,
 }));
 
 // Combine and sort by publication date (newest first)
-const posts = [...astroPosts, ...wpPosts].sort(
+const allPosts = [...astroPosts, ...wpPosts].sort(
   (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
-}));
+);
 ---
 
 <Layout>
