@@ -4,8 +4,6 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
-
-
 // Fetch Astro content collection
 const posts = (await getCollection("blog", post => !post.data.hide)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -24,7 +22,7 @@ const wpPosts = (await wpResponse.json()).map(post => ({
 // Combine and sort by publication date (newest first)
 const posts = [...astroPosts, ...wpPosts].sort(
   (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
-);
+}));
 ---
 
 <Layout>
