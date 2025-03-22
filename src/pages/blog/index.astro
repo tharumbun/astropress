@@ -13,7 +13,7 @@ const astroPosts = (await getCollection("blog", post => !post.data.hide)).map(po
 }));
 
 // Fetch WordPress posts
-const wpResponse = await fetch("https://yourwordpresssite.com/wp-json/wp/v2/posts");
+const wpResponse = await fetch("https://wp.phnompenhreview.com/wp-json/wp/v2/posts");
 const wpPosts = (await wpResponse.json()).map(post => ({
   id: post.id,
   title: post.title.rendered,
