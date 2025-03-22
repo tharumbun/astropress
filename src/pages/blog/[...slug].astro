@@ -4,7 +4,7 @@ import BlogPost from "../../layouts/BlogPost.astro";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", post => !post.data.hide);
+  const posts = await getCollection("https://wp.phnompenhreview.com/wp-json/wp/v2/posts", post => !post.data.hide);
   return posts.map(post => ({
     params: { slug: post.id },
     props: post,
