@@ -4,12 +4,11 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
+
+
 // Fetch Astro content collection
-const astroPosts = (await getCollection("blog", post => !post.data.hide)).map(post => ({
-  id: post.id,
-  title: post.data.title,
-  pubDate: post.data.pubDate,
-  source: 'astro'
+const posts = (await getCollection("blog", post => !post.data.hide)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 }));
 
 // Fetch WordPress posts
