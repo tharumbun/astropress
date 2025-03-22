@@ -4,34 +4,14 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
-// Fetch Astro content collection
-const astroPosts = (await getCollection("blog", (post) => !post.data.hide)).map((post) => ({
-  id: post.id,
-  title: post.data.title,
-  pubDate: post.data.pubDate ? new Date(post.data.pubDate) : null,
-  source: "astro",
-  url: generateURL(post),
-})).filter(post => post.pubDate); // Filter out posts with invalid dates
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { generateURL } from "../../utils";
 
-// Fetch WordPress posts
-const wpResponse = await fetch("https://wp.phnompenhreview.com/wp-json/wp/v2/posts");
-const wpPosts = (await wpResponse.json()).map((post) => ({
-  id: post.id,
-  title: post.title.rendered,
-  pubDate: post.date ? new Date(post.date) : null,
-  source: "wordpress",
-  url: `/wordpress/${post.slug}`,
-})).filter(post => post.pubDate); // Filter out posts with invalid dates
-
-// Debugging: Check for invalid entries
-console.log("astroPosts:", astroPosts);
-console.log("wpPosts:", wpPosts);
-
-// Combine and sort by publication date (newest first)
-const allPosts = [...astroPosts, ...wpPosts].sort((a, b) => b.pubDate - a.pubDate);
-
-export { allPosts };
-
+const posts = (await getCollection("blog", post => !post.data.hide)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <Layout>
