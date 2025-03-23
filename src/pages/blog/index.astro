@@ -21,7 +21,7 @@ const posts = (await getCollection("https://wp.phnompenhreview.com/wp-json/wp/v2
             </i>
           </span>
           <a
-            href={generateURL(`/blog/${post.id}/`)}
+            href={generateURL(`/${post.id}/`)}
             transition:name={`post-title-${post.id}`}
           >
             {post.data.title}
