@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { generateURL } from "../../utils";
 
+const wpPosts = await fetch(import.meta.env.WORDPRESS_API_URL).then(res => res.json());
 const posts = (await getCollection("https://wp.phnompenhreview.com/wp-json/wp/v2/posts", post => !post.data.hide)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
